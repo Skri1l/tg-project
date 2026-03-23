@@ -1,6 +1,6 @@
 package backend.academy.linktracker.bot.mapper;
 
-import backend.academy.linktracker.bot.model.dto.TelegramMessageRequestDto;
+import backend.academy.linktracker.bot.model.TelegramUpdateDto;
 import backend.academy.linktracker.bot.validation.UpdateValidator;
 import com.pengrad.telegrambot.model.Update;
 import lombok.RequiredArgsConstructor;
@@ -12,8 +12,8 @@ import java.util.List;
 public class TelegramMessageMapper {
     private final UpdateValidator updateValidator;
 
-    public TelegramMessageRequestDto toDto(Update update) {
-        return new TelegramMessageRequestDto(
+    public TelegramUpdateDto toEntity(Update update) {
+        return new TelegramUpdateDto(
             update.updateId(),
             update.message().chat().id(),
             update.message().from().id(),
@@ -22,7 +22,9 @@ public class TelegramMessageMapper {
         );
     }
 
-    public List<TelegramMessageRequestDto> toDtoList(List<Update> updateList) {
+    public
+
+    public List<TelegramUpdateDto> toDtoList(List<Update> updateList) {
         return updateList.stream()
             .filter(updateValidator::validate)
             .map(this::toDto)

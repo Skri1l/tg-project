@@ -1,8 +1,7 @@
 package backend.academy.linktracker.bot.validation;
 
-import backend.academy.linktracker.bot.model.TelegramMessageProperty;
+import backend.academy.linktracker.bot.model.TelegramUpdateProperty;
 import com.pengrad.telegrambot.model.Update;
-import com.pengrad.telegrambot.model.Message;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import java.util.List;
@@ -11,11 +10,11 @@ import java.util.List;
 @Component
 public class UpdateValidator {
     public boolean validate(Update update) {
-        List<TelegramMessageProperty<?>> propertiesToValidate = List.of(
-            new TelegramMessageProperty<>("message", update.message()),
-            new TelegramMessageProperty<>("user", update.message().from()),
-            new TelegramMessageProperty<>("username", update.message().from().username()),
-            new TelegramMessageProperty<>("messageText", update.message().text())
+        List<TelegramUpdateProperty<?>> propertiesToValidate = List.of(
+            new TelegramUpdateProperty<>("message", update.message()),
+            new TelegramUpdateProperty<>("user", update.message().from()),
+            new TelegramUpdateProperty<>("username", update.message().from().username()),
+            new TelegramUpdateProperty<>("messageText", update.message().text())
         );
 
         return propertiesToValidate.stream()
@@ -25,7 +24,7 @@ public class UpdateValidator {
             ));
     }
 
-    private <T> boolean validateUpdateProperty(int updateId, TelegramMessageProperty<T> property) {
+    private <T> boolean validateUpdateProperty(int updateId, TelegramUpdateProperty<T> property) {
         if(property.value() == null){
             log.atWarn()
                 .addArgument(updateId)

@@ -1,16 +1,16 @@
 package backend.academy.linktracker.bot.listener;
 
 import backend.academy.linktracker.bot.mapper.TelegramMessageMapper;
-import backend.academy.linktracker.bot.model.dto.TelegramMessageRequestDto;
+import backend.academy.linktracker.bot.model.TelegramUpdateDto;
 import backend.academy.linktracker.bot.service.BotService;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Update;
 import jakarta.annotation.PostConstruct;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import java.util.List;
 
 @Slf4j
 @Component
@@ -27,14 +27,14 @@ public class BotListener implements UpdatesListener {
 
     @Override
     public int process(List<Update> updateList) {
-        List<TelegramMessageRequestDto> telegramMessageDtoList = messageMapper.toDtoList(updateList);
+        List<TelegramUpdateDto> telegramMessageDtoList = messageMapper.toDtoList(updateList);
 
         Integer lastProcessedId = CONFIRMED_UPDATES_NONE;
         try {
             for(final var telegramMessage : telegramMessageDtoList) {
                 lastProcessedId = telegramMessage.updateId();
                 // TODO: add response handling
-                botService.processMessage(telegramMessage);
+                botService.processUpdate(telegramMessage);
             }
         } catch (Exception e) {
             log.atInfo()

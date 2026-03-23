@@ -1,6 +1,6 @@
-package backend.academy.linktracker.bot.model.dto;
+package backend.academy.linktracker.bot.model;
 
-public record TelegramMessageRequestDto(
+public record TelegramUpdateDto(
     Integer updateId,
     Long chatId,
     Long userId,
