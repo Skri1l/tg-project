@@ -1,10 +1,22 @@
 package backend.academy.linktracker.bot.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
+@Getter
+@Builder
 public class TelegramUpdateEntity {
-    private Long id;
-    private Integer updateId;
-    private Long chatId;
-    private Long userId;
-    private String username;
-    private String message;
+    Long id;
+    Integer updateId;
+    Long chatId;
+    Long userId;
+    String username;
+    String message;
 }
+

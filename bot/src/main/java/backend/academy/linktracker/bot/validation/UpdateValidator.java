@@ -2,9 +2,9 @@ package backend.academy.linktracker.bot.validation;
 
 import backend.academy.linktracker.bot.model.TelegramUpdateProperty;
 import com.pengrad.telegrambot.model.Update;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import java.util.List;
 
 @Slf4j
 @Component
@@ -25,7 +25,7 @@ public class UpdateValidator {
     }
 
     private <T> boolean validateUpdateProperty(int updateId, TelegramUpdateProperty<T> property) {
-        if(property.value() == null){
+        if (property.value() == null) {
             log.atWarn()
                 .addArgument(updateId)
                 .addArgument(property.name())

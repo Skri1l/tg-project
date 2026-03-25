@@ -2,7 +2,8 @@ package backend.academy.linktracker.bot.model;
 
 public enum CommandType {
     START_COMMAND("/start"),
-    HELP_COMMAND("/help");
+    HELP_COMMAND("/help"),
+    UNKNOWN_COMMAND("UNKNOWN_COMMAND");
 
     private final String commandName;
 

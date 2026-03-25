@@ -1,4 +1,6 @@
 package backend.academy.linktracker.bot.model;
 
-public record TelegramUpdateResponseDto(String message)
-{ }
+public record TelegramUpdateResponseDto(
+    Long chatId,
+    String message
+) { }
