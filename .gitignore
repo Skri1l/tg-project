@@ -51,3 +51,9 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Docs ###
+/docs
+
+### Env ###
+.env

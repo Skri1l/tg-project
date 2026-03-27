@@ -3,6 +3,7 @@ package backend.academy.linktracker.bot.listener;
 import backend.academy.linktracker.bot.mapper.TelegramMessageMapper;
 import backend.academy.linktracker.bot.model.TelegramUpdateDto;
 import backend.academy.linktracker.bot.model.TelegramUpdateResponseDto;
+import backend.academy.linktracker.bot.sender.TelegramMessageSender;
 import backend.academy.linktracker.bot.service.BotService;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
@@ -21,6 +22,7 @@ public class BotListener implements UpdatesListener {
     private final TelegramBot telegramBot;
     private final BotService botService;
     private final TelegramMessageMapper messageMapper;
+    private final TelegramMessageSender messageSender;
 
     @PostConstruct
     public void start() {
@@ -29,12 +31,10 @@ public class BotListener implements UpdatesListener {
 
     @Override
     public int process(List<Update> updateList) {
-        List<TelegramUpdateDto> telegramUpdateDtoList = messageMapper.toDtoList(updateList);
-
         Integer lastProcessedId = CONFIRMED_UPDATES_NONE;
         List<TelegramUpdateResponseDto> responses = new ArrayList<>(updateList.size());
         try {
-            for (final var telegramMessage : telegramUpdateDtoList) {
+            for (final var telegramMessage : updateList) {
                 lastProcessedId = telegramMessage.updateId();
                 responses.add(botService.processUpdate(telegramMessage));
             }
@@ -45,7 +45,7 @@ public class BotListener implements UpdatesListener {
             return lastProcessedId;
         }
 
-        // TODO: add response handling
+        responses.forEach(messageSender::sendMessage);
 
         return CONFIRMED_UPDATES_ALL;
     }

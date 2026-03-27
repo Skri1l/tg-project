@@ -2,7 +2,6 @@ package backend.academy.linktracker.bot.mapper;
 
 import backend.academy.linktracker.bot.model.TelegramUpdateDto;
 import backend.academy.linktracker.bot.model.TelegramUpdateEntity;
-import backend.academy.linktracker.bot.validation.UpdateValidator;
 import com.pengrad.telegrambot.model.Update;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -11,9 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class TelegramMessageMapper {
-    private final UpdateValidator updateValidator;
-
-    public TelegramUpdateDto toDto(Update update) {
+    public TelegramUpdateDto toDtoFromUpdate(Update update) {
         return new TelegramUpdateDto(
             update.updateId(),
             update.message().chat().id(),
@@ -35,8 +32,7 @@ public class TelegramMessageMapper {
 
     public List<TelegramUpdateDto> toDtoList(List<Update> updateList) {
         return updateList.stream()
-            .filter(updateValidator::validate)
-            .map(this::toDto)
+            .map(this::toDtoFromUpdate)
             .toList();
     }
 }
