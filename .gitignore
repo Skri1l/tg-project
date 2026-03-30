@@ -53,7 +53,7 @@ build/
 .DS_Store
 
 ### Docs ###
-/docs
+
 
 ### Env ###
 .env
